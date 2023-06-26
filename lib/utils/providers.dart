@@ -1,6 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:test_again/provider/something/something.dart';
+import 'package:test_again/provider/contact/contact.dart';
 import 'package:test_again/utils/injection.dart' as di;
 
 List<SingleChildWidget> providers = [
@@ -8,5 +8,5 @@ List<SingleChildWidget> providers = [
 ];
 
 List<SingleChildWidget> independentServices = [
-  ChangeNotifierProvider(create: (_) => di.locator<SomethingProvider>()),
+  ChangeNotifierProvider(create: (_) => di.locator<ContactProvider>()),
 ];
