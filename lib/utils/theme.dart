@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 const ColorScheme myColorScheme = ColorScheme(
   brightness: Brightness.light,
-  primary: Color(0XFF455561),
+  primary: Color(0XFFff8c00),
   onPrimary: Colors.white,
   secondary: Color(0xff5C6672),
   onSecondary: Colors.white,
@@ -53,11 +53,5 @@ ThemeData myThemeData = ThemeData(
   appBarTheme: const AppBarTheme(
     elevation: 0,
   ),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: myColorScheme.primary, elevation: 10.0),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    backgroundColor: myColorScheme.primary,
-    selectedItemColor: myColorScheme.onPrimary,
-    unselectedItemColor: myColorScheme.secondary,
-  ),
+  primaryColor: myColorScheme.primary,
 );

@@ -13,6 +13,17 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Contacts'),
         centerTitle: true,
+        leading: IconButton(
+            onPressed: () {},
+            tooltip: 'Search Contact',
+            icon: const Icon(Icons.search)),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            tooltip: 'Add Contact',
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: Consumer<ContactProvider>(
         builder: (context, provider, _) {

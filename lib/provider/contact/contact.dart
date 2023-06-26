@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:test_again/data/model/contact/contact.dart';
 import 'package:test_again/utils/constants.dart';
 import 'package:test_again/utils/provider_enum.dart';
@@ -15,7 +17,6 @@ List<Contact>? _contacts;
 late Contact _detail;
 
 class ContactProvider extends ChangeNotifier {
-
   ContactProvider() {
     fetchContacts();
   }
@@ -30,8 +31,12 @@ class ContactProvider extends ChangeNotifier {
 
   Future<List<Contact>> fetchRawData() async {
     final String response = await rootBundle.loadString(Constants.dummyData);
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    File jsonFile = File("${appDocDir.path}/data.json");
+    jsonFile.writeAsStringSync(response);
     final jsonData = jsonDecode(response);
-    List<Contact> data = (jsonData as List).map((item) => Contact.fromJson(item)).toList();
+    List<Contact> data =
+        (jsonData as List).map((item) => Contact.fromJson(item)).toList();
     return data;
   }
 
@@ -57,9 +62,26 @@ class ContactProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> updateContact(Contact data) async {
+    _state = ProviderState.loading;
+    notifyListeners();
+    try {
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      File jsonFile = File("${appDocDir.path}/data.json");
+      jsonFile.writeAsStringSync(jsonEncode(data.toJson()));
+      fetchContacts();
+      notifyListeners();
+    } catch (e, stacktrace) {
+      debugPrint(e.toString());
+      debugPrint(stacktrace.toString());
+      _message = e.toString();
+      _state = ProviderState.error;
+      notifyListeners();
+    }
+  }
+
   void getDetail(Contact data) {
     _detail = data;
     notifyListeners();
   }
-
 }
